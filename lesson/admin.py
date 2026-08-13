@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import category, Lesson
+from .models import category, Lesson, Tag
 
 
 # Register your models here.
@@ -13,8 +13,8 @@ class LessonAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'description', 'created_at', 'updated_at')
     search_fields = ('title', 'description')  # Search by lesson title or description
     list_filter = ('category', 'created_at')  # Filter lessons by category or creation date
-
+    filter_horizontal = ('tags',)  # Use horizontal filter for ManyToMany field 'tags'
 
 admin.site.register(category, CategoryAdmin)
+admin.site.register(Tag)  # Register the Tag model with default admin options
 admin.site.register(Lesson, LessonAdmin)
-

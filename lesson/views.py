@@ -6,7 +6,8 @@ from .serializers import CategorySerializer, LessonSerializer
 
 class ViewLesson(APIView):
     def get(self, request):
-        lessons = Lesson.objects.all().select_related('category')
+        #selectrelated for foreignkey (category ), prefetch_related for ManyToMany (tags)
+        lessons = Lesson.objects.all().select_related('category').prefetch_related('tags')
         serializer = LessonSerializer(lessons, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
